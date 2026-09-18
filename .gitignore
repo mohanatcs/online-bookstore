@@ -31,3 +31,16 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# H2 database
+/data/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Maven
+target/
+
+# Logs
+*.log
