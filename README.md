@@ -94,167 +94,47 @@ H2 Database
 - Swagger / OpenAPI
 - JUnit 5 & Mockito
 
-## API Reference
+## API Documentation
 
-### Authentication
+Swagger / OpenAPI is used for interactive API documentation.
 
-#### Register User
+API documentation is maintained directly at the controller level using
+OpenAPI annotations. This keeps the documentation close to the API
+implementation and makes it easier to maintain and understand.
 
-- **URL:** `/api/auth/register`
-- **Method:** `POST`
-- **Request Body:**
+Each API includes relevant information such as:
 
-```json
-{
-  "username": "john",
-  "email": "john@example.com",
-  "password": "password123"
-}
+- API description
+- Request and response details
+- HTTP status codes
+- Validation and error responses
+
+Swagger UI is available at:
+
+```text
+http://localhost:8081/swagger-ui.html
 ```
 
-- **Response:** Returns a success message when the user is registered.
+The OpenAPI specification is maintained in:
 
-#### Login User
-
-- **URL:** `/api/auth/login`
-- **Method:** `POST`
-- **Request Body:**
-
-```json
-{
-  "email": "john@example.com",
-  "password": "password123"
-}
+```text
+src/main/resources/openapi.yml
 ```
 
-- **Response:** Returns login confirmation and username.
+## Error Handling
 
-### Books
+The application uses centralized exception handling through
+`GlobalExceptionHandler`.
 
-#### Get All Books
+Handled scenarios include:
 
-- **URL:** `/api/books`
-- **Method:** `GET`
-- **Response:** Returns the list of available books.
-
-#### Get Book by ID
-
-- **URL:** `/api/books/{id}`
-- **Method:** `GET`
-- **Response:** Returns the requested book.
-
-#### Create Book
-
-- **URL:** `/api/books/create`
-- **Method:** `POST`
-- **Request Body:**
-
-```json
-{
-  "title": "Clean Code",
-  "author": "Robert C. Martin",
-  "price": 499.99
-}
-```
-
-- **Response:** Returns the created book.
-
-#### Update Book
-
-- **URL:** `/api/books/{id}`
-- **Method:** `PUT`
-- **Response:** Returns the updated book.
-
-#### Delete Book
-
-- **URL:** `/api/books/{id}`
-- **Method:** `DELETE`
-- **Response:** Returns a success message.
-
-### Shopping Cart
-
-#### Add Book to Cart
-
-- **URL:** `/api/cart/create/items`
-- **Method:** `POST`
-- **Request Body:**
-
-```json
-{
-  "userId": 1,
-  "bookId": 1,
-  "quantity": 2
-}
-```
-
-- **Response:** Returns the updated cart.
-
-#### View Cart
-
-- **URL:** `/api/cart/{userId}`
-- **Method:** `GET`
-- **Response:** Returns the user's cart with items and total price.
-
-#### Update Cart Item
-
-- **URL:** `/api/cart/update/items/{cartItemId}`
-- **Method:** `PUT`
-- **Request Body:**
-
-```json
-{
-  "quantity": 3
-}
-```
-
-- **Response:** Returns the updated cart.
-
-#### Remove Cart Item
-
-- **URL:** `/api/cart/delete/items/{cartItemId}`
-- **Method:** `DELETE`
-- **Response:** Returns a success message.
-
-### Orders
-
-#### Create Order
-
-- **URL:** `/api/orders/create`
-- **Method:** `POST`
-- **Request Body:**
-
-```json
-{
-  "userId": 1
-}
-```
-
-- **Response:** Returns the created order with order items and total price.
-
-#### Get Order
-
-- **URL:** `/api/orders/{orderId}`
-- **Method:** `GET`
-- **Response:** Returns the order details.
-
-#### Get User Orders
-
-- **URL:** `/api/orders/user/{userId}`
-- **Method:** `GET`
-- **Response:** Returns all orders for the specified user.
-
-### Error Responses
-
-In case of errors, the API returns a standardized JSON error response.
-
-Example:
-
-```json
-{
-  "status": 404,
-  "message": "Book not found"
-}
-```
+- Validation errors
+- User not found
+- Book not found
+- Cart not found
+- Cart item not found
+- Order not found
+- Invalid login credentials
 
 Common HTTP status codes:
 
@@ -333,15 +213,13 @@ mvn spring-boot:run
 
 The application will start on port **8081**.
 
-You can access the Swagger UI documentation at:
+### Swagger UI
 
 ```text
 http://localhost:8081/swagger-ui.html
 ```
 
 ### H2 Console
-
-The H2 database console is available at:
 
 ```text
 http://localhost:8081/h2-console
