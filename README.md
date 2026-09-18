@@ -3,10 +3,15 @@
 ## Overview
 
 The Online Bookstore Backend is a Spring Boot-based REST API for managing
-users, books, shopping carts, and orders. The application provides APIs for user registration and login, book
+users, books, shopping carts, and orders.
+
+The application provides APIs for user registration and login, book
 management, shopping cart operations, and checkout/order management.
+
 The application uses H2 database for persistence and Swagger/OpenAPI
-for interactive API documentation. The project follows a TDD approach with JUnit 5 and Mockito for unit testing.
+for interactive API documentation.
+
+The project follows a TDD approach with JUnit 5 and Mockito for unit testing.
 
 ## Project Scope
 
@@ -17,10 +22,7 @@ for interactive API documentation. The project follows a TDD approach with JUnit
 - Allow users to checkout and create orders.
 - Maintain order history after checkout.
 - Provide API documentation using Swagger.
-- Provide validation and centralized exception handling
-
-
-----
+- Provide validation and centralized exception handling.
 
 ## Features
 
@@ -47,7 +49,37 @@ for interactive API documentation. The project follows a TDD approach with JUnit
 
 - **Unit Testing:**
   Uses JUnit 5 and Mockito with a Test Driven Development (TDD) approach.
----
+
+## High-Level Architecture
+
+```text
+Client
+   |
+   v
+Controller Layer
+   |
+   v
+DTO Layer
+   |
+   v
+Service Layer
+   |
+   v
+Repository Layer
+   |
+   v
+H2 Database
+```
+
+### Layers
+
+- **Controller:** Handles HTTP requests and responses.
+- **DTO:** Defines API request and response models.
+- **Service:** Contains business logic.
+- **Repository:** Handles database operations using Spring Data JPA.
+- **Entity:** Represents database tables.
+- **Exception:** Provides centralized error handling.
+- **Config:** Contains security and OpenAPI configuration.
 
 ## Technology Stack
 
@@ -62,50 +94,8 @@ for interactive API documentation. The project follows a TDD approach with JUnit
 - Swagger / OpenAPI
 - JUnit 5 & Mockito
 
----
-
-## Getting Started
-
----
-
-
-### Prerequisites
-
-- **Java 17**
-- **Maven**
-- **Git**
-- **IntelliJ IDEA**
-
-### Clone the Repository
-````
-git clone https://github.com/mohanatcs/online-bookstore.git
-````
-### Build the Project
-
-Use Maven to build the project:
-
-```bash
-mvn clean install
-```
-
-## Launch the Application
-
-Start the application with:
-
-```bash
-mvn spring-boot:run
-```
-
-The application will start on port **8081**.
-
-You can access the Swagger UI documentation at:
-
-```text
-http://localhost:8081/swagger-ui.html
-```
 ## API Reference
 
----
 ### Authentication
 
 #### Register User
@@ -147,6 +137,12 @@ http://localhost:8081/swagger-ui.html
 - **Method:** `GET`
 - **Response:** Returns the list of available books.
 
+#### Get Book by ID
+
+- **URL:** `/api/books/{id}`
+- **Method:** `GET`
+- **Response:** Returns the requested book.
+
 #### Create Book
 
 - **URL:** `/api/books/create`
@@ -162,6 +158,18 @@ http://localhost:8081/swagger-ui.html
 ```
 
 - **Response:** Returns the created book.
+
+#### Update Book
+
+- **URL:** `/api/books/{id}`
+- **Method:** `PUT`
+- **Response:** Returns the updated book.
+
+#### Delete Book
+
+- **URL:** `/api/books/{id}`
+- **Method:** `DELETE`
+- **Response:** Returns a success message.
 
 ### Shopping Cart
 
@@ -186,6 +194,26 @@ http://localhost:8081/swagger-ui.html
 - **URL:** `/api/cart/{userId}`
 - **Method:** `GET`
 - **Response:** Returns the user's cart with items and total price.
+
+#### Update Cart Item
+
+- **URL:** `/api/cart/update/items/{cartItemId}`
+- **Method:** `PUT`
+- **Request Body:**
+
+```json
+{
+  "quantity": 3
+}
+```
+
+- **Response:** Returns the updated cart.
+
+#### Remove Cart Item
+
+- **URL:** `/api/cart/delete/items/{cartItemId}`
+- **Method:** `DELETE`
+- **Response:** Returns a success message.
 
 ### Orders
 
@@ -235,3 +263,86 @@ Common HTTP status codes:
 - **400** – Bad request / validation error
 - **401** – Invalid credentials
 - **404** – Resource not found
+
+## Testing & TDD
+
+The project follows a Test Driven Development approach:
+
+```text
+Write Test
+    ↓
+Run Test
+    ↓
+Implement Code
+    ↓
+Run Test
+    ↓
+Refactor
+```
+
+Unit tests are implemented using JUnit 5 and Mockito.
+
+The service layer is tested for successful operations, business logic,
+validation scenarios, and exception scenarios.
+
+Run the tests using:
+
+```bash
+mvn test
+```
+
+## Code Quality
+
+- Uses Lombok to reduce boilerplate code.
+- Uses DTOs to separate API models from persistence entities.
+- Uses constructor-based dependency injection.
+- Uses centralized exception handling.
+- Follows layered architecture for separation of responsibilities.
+
+## Getting Started
+
+### Prerequisites
+
+- **Java 17**
+- **Maven**
+- **Git**
+- **IntelliJ IDEA**
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/mohanatcs/online-bookstore.git
+cd online-bookstore
+```
+
+### Build the Project
+
+Use Maven to build the project:
+
+```bash
+mvn clean install
+```
+
+## Launch the Application
+
+Start the application with:
+
+```bash
+mvn spring-boot:run
+```
+
+The application will start on port **8081**.
+
+You can access the Swagger UI documentation at:
+
+```text
+http://localhost:8081/swagger-ui.html
+```
+
+### H2 Console
+
+The H2 database console is available at:
+
+```text
+http://localhost:8081/h2-console
+```
